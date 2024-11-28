@@ -125,10 +125,11 @@ class _UploadScreenState extends State<UploadScreen> {
                       onPressed: () {
                         if (selectedImagePath != null) {
                           cubit.uploadRoshta(
+                            imagePath: selectedImagePath!,
+
                             id: idController.text,
                             title: titleController.text,
                             terms: termsController.text,
-                            imagePath: selectedImagePath!,
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(

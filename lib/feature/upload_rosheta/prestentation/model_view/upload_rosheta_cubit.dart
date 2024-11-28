@@ -16,10 +16,10 @@ class UploadRoshetaCubit extends Cubit<UploadRoshtaState> {
     emit(UploadRoshtaLoading());
 
     final result = await repo.uploadRoshta(
+      imagePath: imagePath,
       id: id,
       title: title,
       terms: terms,
-      imagePath: imagePath,
     );
 
     result.fold(

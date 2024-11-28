@@ -19,23 +19,30 @@ class UploadRepoImpl extends UploadRoshtaRepo {
   }) async {
     try {
       final formData = FormData.fromMap({
+        'image':
+        await MultipartFile.fromFile(imagePath, filename: 'report.jpg',),
         'id': id,
         'title': title,
         'terms': terms,
-        'image': await MultipartFile.fromFile(imagePath, filename: 'report.jpg'),
+
       });
-      final response = await api.post(
-          ApiEndPoint.uploadRosheta,
-          data: formData
-      );
-      if ((response.statusCode == 200 || response.statusCode == 201) && response.data is Map<String, dynamic>) {
+      final response =
+          await api.post(ApiEndPoint.uploadRosheta, data: formData);
+      if ((response.statusCode == 200 || response.statusCode == 201) &&
+          response.data is Map<String, dynamic>) {
         final responseData = UploadRoshetaModel.fromJson(response.data);
-    return Right(responseData);
-      }  else {
+        return Right(responseData);
+      } else {
         return Left('Failed to upload Rosheta');
       }
-    } on Exception catch (e) {
+    } on DioException catch (e) {
+      if (e.type == DioExceptionType.receiveTimeout) {
+        return Left('Request timed out. Please try again.');
+      }
+      return Left('Unexpected error: ${e.message}');
+    }on Exception catch (e) {
       return Left(e.toString());
+
     }
   }
 }

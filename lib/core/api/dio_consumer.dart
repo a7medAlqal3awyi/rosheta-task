@@ -10,8 +10,10 @@ class DioConsumer extends ApiConsumer {
   final Dio dio;
 
   DioConsumer({required this.dio}) {
-    dio.options.baseUrl = ApiEndPoint.baseUrl;
+    dio.options.connectTimeout=const Duration(seconds: 10);
+    dio.options.receiveTimeout=const Duration(seconds: 30);
 
+    dio.options.baseUrl = ApiEndPoint.baseUrl;
     dio.options.headers = {
       'Authorization':
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY3MjBmNTg4ODcxZDllMGI0N2I0MjYwNSIsInJvbGUiOiJhZG1pbiJ9LCJpYXQiOjE3MzI3MTk5Mzh9.ywk3dC2Y6gpqqHvyKrtLjcOqCGH52nk3yV_EFFB_vtk',
